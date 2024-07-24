@@ -19,6 +19,22 @@ const helmet = require("helmet");
 //  we create the app object using our imported express module,
 let app = express();
 
+// Set up mongoose connection
+mongoose.set("strictQuery", false);
+
+const mongoDB = process.env.MONGODB_URI;
+
+main().catch((err) => console.log('Error connecting to MongoDB:', err));
+
+async function main() {
+  try {
+    await mongoose.connect(mongoDB);
+    console.log('Connected to MongoDB successfully');
+  } catch (err) {
+    console.error('Error connecting to MongoDB:', err);
+  }
+}
+
 
 // Use Helmet to protect against well known vulnerabilities
 app.use(
@@ -45,21 +61,7 @@ app.use(limiter);
 
 
 
-// Set up mongoose connection
-mongoose.set("strictQuery", false);
 
-const mongoDB = process.env.MONGODB_URI;
-
-main().catch((err) => console.log('Error connecting to MongoDB:', err));
-
-async function main() {
-  try {
-    await mongoose.connect(mongoDB);
-    console.log('Connected to MongoDB successfully');
-  } catch (err) {
-    console.error('Error connecting to MongoDB:', err);
-  }
-}
 
 
 //  There are two parts to setting up the engine. First, we set the 'views' value to specify the folder where the templates will be stored (in this case the subfolder /views). 
