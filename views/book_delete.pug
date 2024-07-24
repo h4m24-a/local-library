@@ -1,0 +1,43 @@
+extends layout
+
+
+//- This defines a content block named content. The content within this block will be inserted into a corresponding block in the layout template.
+block content
+
+
+  h1 #{title}: #{book.title}
+
+  if book_instances.length
+    p.text-danger  #[ Delete the following book instances before attempting to delete this book.]
+    div(style='margin-left:20px;margin-top:20px')
+      h4 Book Instances
+      dl
+        each bookInstance in book_instances
+            dt
+              a.text-success(href=bookInstance.url) #{bookInstance.id} #{bookInstance.imprint} #{bookInstance.status}  #{bookInstance.due_back_formatted}
+
+  else
+    p Do you really want to delete this Book?
+    form(method='POST')
+      div.form-group
+        input#bookid.form-control(type='hidden', name='book', value=book._id)
+      button.btn.btn-primary(type='submit') Delete
+
+
+
+
+//- Line 7 - renders an h1 header that displays the title variable followed by the book.title value
+
+
+//- Line 10 - This condition checks if there are any book instances (i.e., if the book_instances array is not empty). If there are book instances, the following block of code is executed.
+  //- This loops over the book_instances array. For each bookInstance
+
+
+
+//- Line 11 - Warning Message: Displays a warning message instructing the user to delete book instances before deleting the book.
+
+
+//- Line 19 - No Book Instances - Confirmation to Delete the Book:
+
+
+//- This template ensures that the user is warned about deleting book instances before deleting the book itself and provides a clear interface for either scenario.
